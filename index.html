@@ -1,0 +1,291 @@
+<html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUXERHU - Luxury Redefined</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000000;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .intro-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 70%);
+        }
+        
+        .luxury-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFFF00, #FFD700);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            animation: shimmer 3s ease-in-out infinite, fadeInScale 2s ease-out;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            color: #C0C0C0;
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 0.5s forwards;
+        }
+        
+        .loading-container {
+            width: 300px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 2s ease-out 1s forwards;
+        }
+        
+        .loading-text {
+            color: #FFD700;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            width: 0%;
+            animation: loadProgress 4s ease-in-out forwards, shimmerBar 2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .luxury-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #FFD700;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+        
+        .enter-button {
+            margin-top: 3rem;
+            padding: 1rem 3rem;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 50px;
+            color: #000;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            animation: fadeInUp 2s ease-out 4s forwards;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+        
+        .enter-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.4);
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+        }
+        
+        .main-content {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            color: #fff;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .main-subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            color: #C0C0C0;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes shimmerBar {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .loading-container {
+                width: 250px;
+            }
+            
+            .enter-button {
+                padding: 0.8rem 2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-container" id="introContainer" style="opacity: 1; transform: scale(1); transition: 1s ease-out; display: flex;">
+        <div class="luxury-particles">
+            <!-- Partículas generadas por JavaScript -->
+        <div class="particle" style="left: 19.4617%; top: 72.4266%; animation-delay: 2.95501s; animation-duration: 5.1272s;"></div><div class="particle" style="left: 47.7576%; top: 64.4658%; animation-delay: 4.71215s; animation-duration: 6.73087s;"></div><div class="particle" style="left: 83.5962%; top: 30.1305%; animation-delay: 0.320044s; animation-duration: 5.0961s;"></div><div class="particle" style="left: 42.7208%; top: 76.0408%; animation-delay: 4.27286s; animation-duration: 6.9274s;"></div><div class="particle" style="left: 24.8351%; top: 38.747%; animation-delay: 2.39972s; animation-duration: 7.998s;"></div><div class="particle" style="left: 42.8828%; top: 92.4115%; animation-delay: 3.58752s; animation-duration: 6.04315s;"></div><div class="particle" style="left: 98.2808%; top: 45.8471%; animation-delay: 3.99915s; animation-duration: 7.06365s;"></div><div class="particle" style="left: 44.5146%; top: 95.5076%; animation-delay: 5.77751s; animation-duration: 7.22019s;"></div><div class="particle" style="left: 25.1716%; top: 85.2554%; animation-delay: 2.61604s; animation-duration: 6.3953s;"></div><div class="particle" style="left: 24.1453%; top: 51.2756%; animation-delay: 0.806066s; animation-duration: 6.41388s;"></div><div class="particle" style="left: 69.1115%; top: 31.9732%; animation-delay: 5.56307s; animation-duration: 6.8431s;"></div><div class="particle" style="left: 62.0412%; top: 4.89059%; animation-delay: 5.19593s; animation-duration: 4.28456s;"></div><div class="particle" style="left: 89.7832%; top: 24.0514%; animation-delay: 3.51906s; animation-duration: 7.06988s;"></div><div class="particle" style="left: 93.637%; top: 88.848%; animation-delay: 2.54445s; animation-duration: 6.94201s;"></div><div class="particle" style="left: 33.3438%; top: 13.7732%; animation-delay: 3.33484s; animation-duration: 5.27964s;"></div><div class="particle" style="left: 15.5108%; top: 45.4053%; animation-delay: 3.33486s; animation-duration: 4.08879s;"></div><div class="particle" style="left: 11.2215%; top: 81.0748%; animation-delay: 4.71235s; animation-duration: 5.14632s;"></div><div class="particle" style="left: 83.3973%; top: 47.0152%; animation-delay: 3.28458s; animation-duration: 6.54477s;"></div><div class="particle" style="left: 82.4799%; top: 50.7441%; animation-delay: 2.08853s; animation-duration: 5.23274s;"></div><div class="particle" style="left: 88.228%; top: 62.771%; animation-delay: 5.70475s; animation-duration: 7.4156s;"></div><div class="particle" style="left: 48.2765%; top: 26.9949%; animation-delay: 5.49174s; animation-duration: 5.61681s;"></div><div class="particle" style="left: 80.8718%; top: 27.9573%; animation-delay: 1.63692s; animation-duration: 7.7871s;"></div><div class="particle" style="left: 28.6955%; top: 41.7761%; animation-delay: 2.22588s; animation-duration: 5.70301s;"></div><div class="particle" style="left: 87.3653%; top: 9.74408%; animation-delay: 5.70538s; animation-duration: 5.09367s;"></div><div class="particle" style="left: 19.1593%; top: 58.5796%; animation-delay: 0.505896s; animation-duration: 7.75106s;"></div><div class="particle" style="left: 98.2752%; top: 53.2906%; animation-delay: 1.84309s; animation-duration: 7.89786s;"></div><div class="particle" style="left: 54.0133%; top: 98.1039%; animation-delay: 5.90777s; animation-duration: 6.70165s;"></div><div class="particle" style="left: 69.2422%; top: 75.3722%; animation-delay: 5.59415s; animation-duration: 4.04473s;"></div><div class="particle" style="left: 36.8508%; top: 47.055%; animation-delay: 4.46058s; animation-duration: 7.28198s;"></div><div class="particle" style="left: 63.3174%; top: 65.6345%; animation-delay: 0.0712788s; animation-duration: 5.35712s;"></div><div class="particle" style="left: 50.6559%; top: 16.9745%; animation-delay: 4.93597s; animation-duration: 6.20758s;"></div><div class="particle" style="left: 45.943%; top: 77.6526%; animation-delay: 3.90874s; animation-duration: 4.58325s;"></div><div class="particle" style="left: 32.9232%; top: 13.9212%; animation-delay: 5.34773s; animation-duration: 4.90782s;"></div><div class="particle" style="left: 54.7962%; top: 60.0227%; animation-delay: 0.324602s; animation-duration: 5.3114s;"></div><div class="particle" style="left: 68.348%; top: 7.04452%; animation-delay: 4.56118s; animation-duration: 5.58939s;"></div><div class="particle" style="left: 29.9652%; top: 12.9711%; animation-delay: 1.66155s; animation-duration: 6.18886s;"></div><div class="particle" style="left: 13.2339%; top: 31.0369%; animation-delay: 2.92316s; animation-duration: 7.26429s;"></div><div class="particle" style="left: 99.8402%; top: 64.3198%; animation-delay: 3.83426s; animation-duration: 6.46412s;"></div><div class="particle" style="left: 62.0473%; top: 20.0536%; animation-delay: 5.89201s; animation-duration: 4.46826s;"></div><div class="particle" style="left: 0.504838%; top: 62.7861%; animation-delay: 3.23478s; animation-duration: 5.03511s;"></div><div class="particle" style="left: 87.6408%; top: 75.7018%; animation-delay: 1.28251s; animation-duration: 5.3508s;"></div><div class="particle" style="left: 31.693%; top: 6.44914%; animation-delay: 4.78299s; animation-duration: 4.81578s;"></div><div class="particle" style="left: 28.4724%; top: 90.5747%; animation-delay: 0.840151s; animation-duration: 4.84309s;"></div><div class="particle" style="left: 73.4767%; top: 43.2827%; animation-delay: 1.63597s; animation-duration: 7.93018s;"></div><div class="particle" style="left: 40.733%; top: 18.2069%; animation-delay: 2.17266s; animation-duration: 5.67225s;"></div><div class="particle" style="left: 44.8059%; top: 16.8172%; animation-delay: 4.7186s; animation-duration: 7.1863s;"></div><div class="particle" style="left: 84.069%; top: 54.9636%; animation-delay: 2.2789s; animation-duration: 7.72721s;"></div><div class="particle" style="left: 50.5804%; top: 59.5923%; animation-delay: 4.71441s; animation-duration: 6.85311s;"></div><div class="particle" style="left: 62.7113%; top: 14.6415%; animation-delay: 2.67249s; animation-duration: 4.36496s;"></div><div class="particle" style="left: 24.7803%; top: 24.2354%; animation-delay: 4.93557s; animation-duration: 5.98183s;"></div></div>
+        
+        <h1 class="luxury-title">LUXERHU</h1>
+        <p class="subtitle">Luxury Redefined</p>
+        
+        <div class="loading-container">
+            <div class="loading-text">Cargando Experiencia de Lujo...</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <button class="enter-button" onclick="enterSite()">Entrar al Mundo Luxerhu</button>
+    </div>
+    
+    <div class="main-content" id="mainContent" style="display: none; opacity: 0; transition: opacity 1s ease-out;">
+        <h1 class="main-title">Bienvenido a LUXERHU</h1>
+        <p class="main-subtitle">
+            Donde el lujo se encuentra con la innovación. Descubre una experiencia única 
+            que redefine los estándares de elegancia y sofisticación.
+        </p>
+    </div>
+
+   <script>
+    // Crear partículas de lujo
+    function createParticles() {
+        const particlesContainer = document.querySelector('.luxury-particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Función para redirigir con animación
+    function enterSite() {
+        const introContainer = document.getElementById('introContainer');
+        introContainer.style.opacity = '0';
+        introContainer.style.transform = 'scale(0.95)';
+        introContainer.style.transition = 'all 0.8s ease-out';
+
+        setTimeout(() => {
+            window.location.href = "https://doramaskyb.vercel.app/luxury.html";
+        }, 800);
+    }
+
+    // Inicializar partículas al cargar
+    window.addEventListener('load', () => {
+        createParticles();
+    });
+
+    // Redirigir automáticamente a los 8 segundos
+    setTimeout(() => {
+        enterSite();
+    }, 8000);
+</script>
